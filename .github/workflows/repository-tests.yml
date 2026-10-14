@@ -23,7 +23,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Detect Java project
+        id: java-project
+        shell: bash
+        run: |
+          if [[ -f pom.xml || -x ./gradlew || -f build.gradle || -f build.gradle.kts ]]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Java
+        if: steps.java-project.outputs.present == 'true'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
