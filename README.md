@@ -1,66 +1,39 @@
-# Bank Account Simulation — Java
+# Bank Account Simulation
 
-## Live Demo / Deployment URL
+[![Java](https://img.shields.io/badge/Java-OOP-orange?logo=openjdk)](https://www.java.com/) [![GitHub](https://img.shields.io/badge/Source-GitHub-181717?logo=github)](https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION)
 
-**Deployment URL:** Not verified yet. Add the confirmed public application URL here after checking the live service. This repository's GitHub URL is the source code, not a deployed application.
+A compact Java project demonstrating account operations and object-oriented programming through classes, inheritance, and method overriding.
 
-
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION) [![Issues](https://img.shields.io/github/issues/saikishore2410/BANK-ACCOUNT-SIMULATION)](https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION/issues) [![Last Commit](https://img.shields.io/github/last-commit/saikishore2410/BANK-ACCOUNT-SIMULATION)](https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION/commits/main)
-
-> An educational Java project that models basic bank-account operations using object-oriented programming.
-
-## At a glance
-
-- **Purpose:** Use the feature and scope sections below to understand the problem this project addresses.
-- **Getting started:** Follow the repository-specific setup instructions and verify commands against the current source and package scripts.
-- **Configuration:** Keep API keys, database credentials, tokens, and private user data out of commits; configure secrets locally.
-- **Quality checks:** Run the available build, test, and lint commands before submitting changes.
-
-
-
-An educational Java project that models basic bank-account operations using object-oriented programming.
-
-## Features
-
-- Create an account
-- Deposit and withdraw funds
-- Record transaction history
-- Model a savings account with inheritance
-- Demonstrate method overriding for withdrawal behaviour
-- Calculate interest where implemented
+## Highlights
+- Deposit and withdrawal workflows
+- Base account behaviour and a SavingsAccount specialization
+- Transaction-related output and interest logic where implemented
+- Small codebase suitable for Java learners and code review
 
 ## Technology
-
-- Java
-- Classes, inheritance, and method overriding
+Java, JDK, object-oriented programming, command-line tools.
 
 ## Run locally
+Install a JDK, then clone the repository and run:
 
-Install a JDK and clone the repository:
+    git clone https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION.git
+    cd BANK-ACCOUNT-SIMULATION
+    javac Account.java SavingsAccount.java Main.java
+    java Main
 
-```bash
-git clone https://github.com/saikishore2410/BANK-ACCOUNT-SIMULATION.git
-cd BANK-ACCOUNT-SIMULATION
-javac *.java
-```
+## Project structure
+- Account.java — base account behaviour
+- SavingsAccount.java — savings-account specialization
+- Main.java — example entry point
+- AccountTest.java — test/smoke-test source
 
-Run the class containing `main` (for example, `java Main` if that is the entry point). Adjust for the actual source structure.
+## Future improvements
+Add validation for negative amounts and insufficient funds, formal unit tests, clearer transaction summaries, and configurable demo data.
 
-## Important scope note
+**Safety:** This is an educational simulation, not banking software. Do not use it to store real customer data or process real money.
 
-This is a learning simulation, not a real banking system. Do not use it to store real financial data or process real money.
-
-## Ideas to extend
-
-- Validate amounts and invalid balances
-- Add unit tests for deposit, withdrawal, and interest rules
-- Persist demo data locally
-- Add transaction summaries and currency formatting
-
-## Contributions
-
-Please include the intended behaviour and test steps with bug fixes.
+## Contributing
+Open an issue with reproducible steps or submit a focused pull request with validation details.
 
 ## License
-
-No license is specified. Add a `LICENSE` file to define reuse terms.
+No license file is currently declared. Add a license before granting reuse permissions.
