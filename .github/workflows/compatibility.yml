@@ -7,7 +7,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "37 2 * * *"
+    - cron: "47 2 * * *"
 
 permissions:
   contents: read
@@ -26,13 +26,13 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java-version }}
-      - name: Find Java source
+      - name: Locate Java files
         run: |
           set -eu
-          find . -type f -name '*.java' -not -path './.git/*' > /tmp/java-sources.txt
+          find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' > /tmp/java-sources.txt
           test -s /tmp/java-sources.txt
           cat /tmp/java-sources.txt
-      - name: Compile Java sources
+      - name: Compile Java source files
         run: |
           set -eu
           mkdir -p build-classes
