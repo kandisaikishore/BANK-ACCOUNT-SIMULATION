@@ -47,3 +47,15 @@ Report issues with reproducible steps. Include the validation you performed when
 ## License
 
 No license file is currently declared. Add a `LICENSE` file to define reuse terms.
+
+
+## REST API and browser UI
+
+The browser interface now calls a Java Spring Boot REST API. Install JDK 17+ and Maven, then start the API from the repository root:
+
+```bash
+cd api
+mvn spring-boot:run
+```
+
+Open the UI at `http://localhost:8083/`. The API uses port 8083. API endpoints are under `/api`. Current API data is held in server memory and resets when the process restarts; configure a database before production use. The API module is separate from the original console/Swing classes, so it does not share their in-process state.
