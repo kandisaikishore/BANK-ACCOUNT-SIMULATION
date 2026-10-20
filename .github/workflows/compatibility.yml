@@ -35,6 +35,8 @@ jobs:
             -not -path './.git/*' \
             -not -path './build-classes/*' \
             -not -path './api/src/*' \
+            -not -path './ui/*' \
+            -not -path './src/main/java/*' \
             -not -path './backend/src/*' \
             -not -path './src/main/java/*' > /tmp/java-sources.txt
           test -s /tmp/java-sources.txt
