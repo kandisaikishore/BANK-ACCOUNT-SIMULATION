@@ -26,14 +26,41 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java-version }}
-      - name: Locate Java files
+      - name: Locate standalone Java sources
+        shell: bash
         run: |
-          set -eu
-          find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' > /tmp/java-sources.txt
+          set -euo pipefail
+          # Compile only standalone sources; framework-dependent modules use Maven/Gradle.
+          find . -type f -name '*.java' \
+            -not -path './.git/*' \
+            -not -path './build-classes/*' \
+            -not -path './api/src/*' \
+            -not -path './backend/src/*' \
+            -not -path './src/main/java/*' > /tmp/java-sources.txt
           test -s /tmp/java-sources.txt
           cat /tmp/java-sources.txt
-      - name: Compile Java source files
+      - name: Compile standalone Java sources
         run: |
-          set -eu
+          set -euo pipefail
           mkdir -p build-classes
           javac -encoding UTF-8 -d build-classes @/tmp/java-sources.txt
+      - name: Build framework modules when present
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=0
+          while IFS= read -r pom; do
+            dir="$(dirname "$pom")"
+            echo "Testing Maven module: $dir"
+            if [[ -x "$dir/mvnw" ]]; then
+              (cd "$dir" && ./mvnw --batch-mode --no-transfer-progress test)
+            elif [[ -f mvnw && "$dir" == "." ]]; then
+              ./mvnw --batch-mode --no-transfer-progress test
+            else
+              mvn --batch-mode --no-transfer-progress -f "$pom" test
+            fi
+            count=$((count + 1))
+          done < <(find . -type d \( -name .git -o -name target -o -name node_modules \) -prune -o -type f -name pom.xml -print)
+          if [[ "$count" == 0 ]]; then
+            echo "No Maven modules detected; standalone compatibility compilation completed."
+          fi
