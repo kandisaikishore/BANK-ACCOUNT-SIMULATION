@@ -62,7 +62,7 @@ jobs:
           if find . -type f -name 'test_*.py' -o -name '*_test.py' | grep -q .; then python -m pytest -q; else echo "No Python test files discovered."; fi
       - name: Set up Java
         if: steps.detect.outputs.java == 'true'
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
