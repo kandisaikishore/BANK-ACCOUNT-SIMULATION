@@ -3,24 +3,26 @@ public class SavingsAccount extends Account {
 
     public SavingsAccount(String accountHolder, String accountNumber, double initialBalance, double interestRate) {
         super(accountHolder, accountNumber, initialBalance);
+        if (!Double.isFinite(interestRate) || interestRate < 0) {
+            throw new IllegalArgumentException("Interest rate must be a finite, non-negative value.");
+        }
         this.interestRate = interestRate;
     }
 
-    // Overriding withdraw to prevent overdraft
     @Override
     public void withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            super.withdraw(amount);
-        } else {
-            System.out.println("Withdrawal not allowed! Insufficient balance.");
-        }
+        super.withdraw(amount);
     }
 
-    // Method to add interest
     public void addInterest() {
-        double interest = balance * interestRate / 100;
-        balance += interest;
-        transactionHistory.add("Interest added: " + interest + " | Balance: " + balance);
-        System.out.println("Interest of " + interest + " added. New Balance: " + balance);
+        synchronized (TRANSACTION_LOCK) {
+            double interest = balance * interestRate / 100;
+            if (!Double.isFinite(interest) || !Double.isFinite(balance + interest)) {
+                throw new IllegalStateException("Interest calculation exceeds the supported balance range.");
+            }
+            balance += interest;
+            transactionHistory.add("Interest added: " + interest + " | Balance: " + balance);
+            System.out.println("Interest of " + interest + " added. New Balance: " + balance);
+        }
     }
 }
